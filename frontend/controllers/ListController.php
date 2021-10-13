@@ -142,6 +142,20 @@ class ListController extends Controller
         return $this->redirect( Url::to(['list/index']));
     }
 
+    public function actionDelete($list_id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $list = ToDoList::findOne($list_id);
+        $list->delete();
+
+        return $this->redirect( Url::to(['list/index']));
+    }
+
+
+
 
 
 }
