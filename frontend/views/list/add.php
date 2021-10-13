@@ -2,32 +2,37 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \frontend\models\SignupForm */
 
+use unclead\multipleinput\MultipleInput;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Add To Do List';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-signup">
+<div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to add list:</p>
 
-    <div class="row">
-        <div class="col-lg-5">
+    <div class="container-fluid">
             <?php $form = ActiveForm::begin(['id' => 'form-add-to-do-list']); ?>
-
             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
             <?= $form->field($model, 'user_id')->hiddenInput(['value'=> $user_id])->label(false); ?>
-
-            <div class="form-group">
-                <?= Html::submitButton('Add', ['class' => 'btn btn-primary', 'name' => 'add-to-do-list-button']) ?>
-            </div>
-
+            <?= $form->field($model, 'items')->widget(MultipleInput::className(), [
+                'max' => 5,
+                'addButtonOptions' => [
+                    'class' => 'btn btn-success',
+                    'label' => 'add' // also you can use html code
+                ],
+                'removeButtonOptions' => [
+                    'label' => 'remove'
+                ],
+                'allowEmptyList' => true,
+                'enableGuessTitle' => true
+            ])->label(false);
+            ?>
+            <?= Html::submitButton('Add', ['class' => 'btn btn-primary', 'name' => 'add-to-do-list-button']) ?>
             <?php ActiveForm::end(); ?>
-        </div>
+
     </div>
 </div>

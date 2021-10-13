@@ -59,6 +59,11 @@ class ToDoList extends \yii\db\ActiveRecord
 //        return $this->hasOne(User::className(), ['id' => 'user_id']);
 //    }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getAllByUserId(User $user)
     {
         $user_id = $user->getId();
