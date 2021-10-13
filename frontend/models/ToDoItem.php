@@ -26,6 +26,11 @@ class ToDoItem extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * {@inheritdoc}
      */

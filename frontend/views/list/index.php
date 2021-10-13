@@ -15,8 +15,8 @@ $this->title = 'My Yii Application';
             <li class="list-group-item">
 
                 <div class="float-right">
-                    <a class="btn btn-success" href="<?= Url::to(['list/show']); ?>">Show</a>
-                    <a class="btn btn-warning" href="<?= Url::toRoute(['list/edit', 'list_id' => $list->getId()]) ?>">Edit</a>
+                    <a class="btn btn-success" href="<?= Url::toRoute(['list/show', 'list_id' => $list->getId()]) ?>">Show</a>
+                    <a class="btn btn-warning" href="<?= Url::toRoute(['list/edit', 'list_id' => $list->getId()]); ?>">Edit</a>
                     <a class="btn btn-danger" href="<?= Url::to(['list/delete']); ?>">Delete</a>
                 </div>
 

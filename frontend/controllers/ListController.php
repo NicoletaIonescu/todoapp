@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\ToDoItem;
+use app\models\ToDoItemForm;
 use app\models\ToDoList;
 use app\models\ToDoListForm;
 use frontend\models\SignupForm;
@@ -29,7 +30,7 @@ class ListController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays index
      *
      * @return mixed
      */
@@ -88,7 +89,7 @@ class ListController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->editToDoList()) {
-            Yii::$app->session->setFlash('success', 'You created a list!');
+            Yii::$app->session->setFlash('success', 'You edited a list!');
             return $this->redirect( Url::to(['list/index']));
         }
 
@@ -98,5 +99,49 @@ class ListController extends Controller
             'list_id' => $list_id
         ]);
     }
+
+    public function actionShow($list_id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $list = ToDoList::findOne($list_id);
+        $itemsBasicModel = new ToDoItem();
+        $itemsList = $itemsBasicModel->getAllByListId($list);
+        $modelList=[];
+        foreach($itemsList as $item){
+            $objItemModel = new ToDoItemForm();
+            $objItemModel->id = $item->getId();
+            $objItemModel->name = $item->name;
+            $objItemModel->status = ($item->status == 1)? true  : false;
+            $modelList[] = $objItemModel;
+        }
+
+
+        return $this->render('show', [
+            'list' => $list,
+            'modelList'=> $modelList
+        ]);
+    }
+
+    public function actionSave()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new ToDoItemForm();
+
+        //TODO
+//        if ($model->load(Yii::$app->request->post()) && $model->saveToDoItem()) {
+//            Yii::$app->session->setFlash('success', 'You created a list!');
+//            return $this->redirect( Url::to(['list/index']));
+//        }
+
+        return $this->redirect( Url::to(['list/index']));
+    }
+
+
 
 }
