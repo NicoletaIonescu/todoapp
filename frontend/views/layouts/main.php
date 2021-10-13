@@ -40,10 +40,11 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => 'Lists', 'url' => ['/list/index']];
+        $menuItems[] = ['label' => ucfirst(Yii::$app->user->identity->username) , 'url'=> ['user/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout ',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

@@ -2,16 +2,23 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Url;
+
 $this->title = 'To Do App';
+$this->params['breadcrumbs'][] = ['label'=>''];
 ?>
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
+        <?php if (Yii::$app->user->isGuest) { ?>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+            <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['site/login']); ?>">Get started and Login! </a></p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <?php } else { ?>
+
+            <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['list/index']); ?>">Create Lists! </a></p>
+
+        <?php } ?>
     </div>
 
     <div class="body-content">
