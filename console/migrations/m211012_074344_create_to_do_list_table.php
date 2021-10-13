@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%list}}`.
+ * Handles the creation of table `{{%to_do_list}}`.
  */
-class m211012_074344_create_list_table extends Migration
+class m211012_074344_create_to_do_list_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%list}}', [
+        $this->createTable('{{%to_do_list}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'order_number'=> $this->integer(),
@@ -20,8 +20,8 @@ class m211012_074344_create_list_table extends Migration
         ]);
 
         $this->addForeignKey(
-            'fk-list-user_id',
-            'list',
+            'fk-to-do-list-user_id',
+            'to_do_list',
             'user_id',
             'user',
             'id',
@@ -35,10 +35,10 @@ class m211012_074344_create_list_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            'fk-list-user_id',
-            'list'
+            'fk-to-do-list-user_id',
+            'to_do_list'
         );
 
-        $this->dropTable('{{%list}}');
+        $this->dropTable('{{%to_do_list}}');
     }
 }
