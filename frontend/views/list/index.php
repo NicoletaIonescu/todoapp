@@ -4,7 +4,9 @@
 
 use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$this->title = 'Lists';
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => Url::to(['list/index'])];
+
 ?>
 <div class="site-index">
 

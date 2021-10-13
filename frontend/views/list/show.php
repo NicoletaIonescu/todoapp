@@ -8,11 +8,13 @@ use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = 'Show To Do List';
+
+$this->title = "Show List $list->name";
+$this->params['breadcrumbs'][] = ['label' => 'Lists', 'url' => Url::to(['list/index'])];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => Url::toRoute(['list/show', 'list_id' => $list->id])];
 ?>
 <div class="container">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="container-fluid"><?= $list->name ?></div>
+    <h1><?= $list->name ?></h1>
 
     <div class="container-fluid">
 

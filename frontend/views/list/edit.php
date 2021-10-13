@@ -7,8 +7,11 @@ use unclead\multipleinput\MultipleInput;
 
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 
-$this->title = 'Edit To Do List';
+$this->title = "Edit List $model->name";
+$this->params['breadcrumbs'][] = ['label' => 'Lists', 'url' => Url::to(['list/index'])];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => Url::toRoute(['list/edit', 'list_id' => $list_id])];
 ?>
 <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
