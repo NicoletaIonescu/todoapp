@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use app\models\ToDoItem;
-use app\models\ToDoItemForm;
-use app\models\ToDoList;
-use app\models\ToDoListForm;
+use frontend\models\ToDoItem;
+use frontend\models\ToDoItemForm;
+use frontend\models\ToDoList;
+use frontend\models\ToDoListForm;
 use frontend\models\SignupForm;
 use Yii;
 use yii\helpers\Url;

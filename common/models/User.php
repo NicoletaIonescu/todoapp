@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use frontend\models\ToDoList;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -209,5 +210,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Gets query for [[ToDoLists]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getToDoLists()
+    {
+        return $this->hasMany(ToDoList::className(), ['user_id' => 'id']);
     }
 }
