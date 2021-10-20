@@ -32,9 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'showFooter'=> false,
         'showHeader' => false,
         'pager' => [
-            'firstPageLabel' => 'First',
-            'lastPageLabel' => 'Last',
-        ],
+            'class' => yii\widgets\LinkPager::className(),
+            ]
         /*'tableOptions' => ['class' => 'table tblSec'],*/
     ]); ?>
 

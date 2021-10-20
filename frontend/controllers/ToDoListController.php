@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
-use frontend\models\ToDoList;
-use frontend\models\ToDoListSearch;
+use frontend\models\todomodels\ToDoList;
+use frontend\models\todomodels\ToDoListForm;
+use frontend\models\todomodels\ToDoListSearch;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,8 +45,7 @@ class ToDoListController extends Controller
         }
 
         $searchModel = new ToDoListSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, Yii::$app->user->identity );
-
+        $dataProvider = $searchModel->search($this->request->queryParams, Yii::$app->user->identity);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -73,18 +74,21 @@ class ToDoListController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ToDoList();
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        $model = new ToDoListForm();
+        $user_id = Yii::$app->user->identity->id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->addToDoList()) {
+            Yii::$app->session->setFlash('success', 'You created a list!');
+            return $this->redirect( Url::to(['to-do-list/index']));
         }
 
         return $this->render('create', [
             'model' => $model,
+            'user_id' => $user_id
         ]);
     }
 

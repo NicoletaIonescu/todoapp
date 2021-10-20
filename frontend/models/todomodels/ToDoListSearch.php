@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\todomodels;
 
 use common\models\User;
 use yii\base\Model;
@@ -38,14 +38,15 @@ class ToDoListSearch extends ToDoList
      *
      * @return ActiveDataProvider
      */
-    public function search($params, User $user, $pageSize=2)
+    public function search($params, User $user)
     {
         if(!$user) {
             throw new Exception("no user for lists");
         }
 
+        $pageSize = isset($params['per-page']) ? intval($params['per-page']) : 2;
+
         $query = $user->getToDoLists();
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

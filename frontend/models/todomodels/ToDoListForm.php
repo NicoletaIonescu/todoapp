@@ -1,8 +1,7 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\todomodels;
 
-use common\models\User;
 use yii\base\Model;
 
 class ToDoListForm extends Model

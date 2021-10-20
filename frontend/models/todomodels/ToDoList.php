@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\todomodels;
 
 use Yii;
 use yii\web\User;

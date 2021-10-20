@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use frontend\models\ToDoList;
+use frontend\models\todomodels\ToDoList;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
