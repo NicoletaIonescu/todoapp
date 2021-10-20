@@ -31,9 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'showFooter'=> false,
         'showHeader' => false,
-        'pager' => [
-            'class' => yii\widgets\LinkPager::className(),
-            ],
         'tableOptions' => ['class' => 'table tblSec']
     ]); ?>
 
