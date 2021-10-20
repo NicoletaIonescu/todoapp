@@ -46,7 +46,7 @@ class ToDoItem extends \yii\db\ActiveRecord
 
     public function getAllByListId(ToDoList $list)
     {
-        $list_id = $list->getId();
+        $list_id = $list->id;
         $toDoItems = $this->find()->where(["list_id" => $list_id])->all();
         return $toDoItems;
     }

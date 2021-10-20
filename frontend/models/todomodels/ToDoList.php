@@ -49,25 +49,15 @@ class ToDoList extends \yii\db\ActiveRecord
         ];
     }
 
-//    /**
-//     * Gets query for [[User]].
-//     *
-//     * @return \yii\db\ActiveQuery
-//     */
-//    public function getUser()
-//    {
-//        return $this->hasOne(User::className(), ['id' => 'user_id']);
-//    }
-
-    public function getId()
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
     {
-        return $this->id;
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+    
 
-    public function getAllByUserId(User $user)
-    {
-        $user_id = $user->getId();
-        $toDoLists = $this->find()->where(["user_id" => $user_id])->all();
-        return $toDoLists;
-    }
 }

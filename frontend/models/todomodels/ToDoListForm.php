@@ -85,7 +85,7 @@ class ToDoListForm extends Model
         if ($this->items){
             foreach($this->items as $item){
                 $toDoListItem = new ToDoItem();
-                $toDoListItem->list_id = $toDoList->getId();
+                $toDoListItem->list_id = $toDoList->id;
                 $toDoListItem->name = $item;
                 $toDoListItem->status = 0;
 
