@@ -21,8 +21,8 @@ class ToDoItem extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string'],
-            [['list_id'],  'required']
-
+            [['list_id'],  'required'],
+            [['status'],  'integer']
         ];
     }
 
@@ -37,9 +37,6 @@ class ToDoItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'status' => 'Status'
         ];
     }
 

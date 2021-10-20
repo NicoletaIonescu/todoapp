@@ -7,6 +7,7 @@ use frontend\models\todomodels\ToDoList;
 use frontend\models\todomodels\ToDoListForm;
 use frontend\models\todomodels\ToDoListSearch;
 use Yii;
+use yii\base\Model;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -63,8 +64,27 @@ class ToDoListController extends Controller
      */
     public function actionView($id)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $list = ToDoList::findOne($id);
+        $todoitemsModel = new ToDoItem();
+        $itemList = $todoitemsModel->getAllByListId($list);
+
+
+        if (Model::loadMultiple($itemList, Yii::$app->request->post()) && Model::validateMultiple($itemList)) {
+            foreach ($itemList as $item) {
+                $item->save(false);
+            }
+            Yii::$app->session->setFlash('success', 'You changed the status!');
+            return $this->redirect( Url::to(['to-do-list/view', 'id' => $list->id]));
+        }
+
+        //return $this->render('update', ['settings' => $settings]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $list,
+            'modelItems' => $itemList,
         ]);
     }
 
@@ -108,6 +128,7 @@ class ToDoListController extends Controller
 
         //get needed info
         $list = ToDoList::findOne($id);
+        $user_id = Yii::$app->user->identity->id;
         $itemsModel = new ToDoItem();
         $itemsList = $itemsModel->getAllByListId($list);
         $items=[];
@@ -121,13 +142,14 @@ class ToDoListController extends Controller
         $model->name = $list->name;
         $model->user_id = $list->user_id;
         $model->items = $items;
-        $user_id = Yii::$app->user->getId();
 
 
         if ($model->load(Yii::$app->request->post()) && $model->editToDoList()) {
             Yii::$app->session->setFlash('success', 'You edited a list!');
-            return $this->redirect( Url::to(['to-do-list/index']));
+            return $this->redirect( Url::to(['to-do-list/update', 'id' => $list->id]));
         }
+
+
 
         return $this->render('update', [
             'model' => $model,

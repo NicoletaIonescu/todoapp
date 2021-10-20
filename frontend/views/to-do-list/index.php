@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\ToDoListSearch */
+/* @var $searchModel frontend\models\todomodels\ToDoListSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $pageSize  */
 
@@ -33,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'showHeader' => false,
         'pager' => [
             'class' => yii\widgets\LinkPager::className(),
-            ]
-        /*'tableOptions' => ['class' => 'table tblSec'],*/
+            ],
+        'tableOptions' => ['class' => 'table tblSec']
     ]); ?>
 
 

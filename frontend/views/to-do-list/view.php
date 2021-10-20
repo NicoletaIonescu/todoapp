@@ -1,10 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
+
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\ToDoList */
+/* @var $model frontend\models\todomodels\ToDoList */
+/* @var $modelItems frontend\models\todomodels\ToDoItem */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'To Do Lists', 'url' => ['index']];
@@ -25,15 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+<?php
+    $form = ActiveForm::begin();
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'user_id',
-            'order_number',
-            'name',
-        ],
-    ]) ?>
+    foreach ($modelItems as $index => $modelItem) {
+
+        echo $form->field($modelItem, "[$index]name")->textInput(['class' => 'form-control class-content-title_series', 'disabled' => true])->label(false) ;
+        echo $form->field($modelItem, "[$index]status")->checkbox()->label(false);
+//        echo "<pre>";
+//        var_dump($modelItem);
+//        echo "</pre>";
+    }
+    ?>
+
+    <?=Html::submitButton('Changed status', ['class' => 'btn btn-primary', 'name' => 'edit-items-to-do-list-button']) ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

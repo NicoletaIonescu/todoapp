@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label'=>''];
 
         <?php } else { ?>
 
-            <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['list/index']); ?>">Create Lists! </a></p>
+            <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['to-do-list/index']); ?>">Create Lists! </a></p>
 
         <?php } ?>
     </div>
