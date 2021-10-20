@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\todomodels\ToDoItem;
 use frontend\models\todomodels\ToDoList;
 use frontend\models\todomodels\ToDoListForm;
 use frontend\models\todomodels\ToDoListSearch;
@@ -101,14 +102,37 @@ class ToDoListController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        //get needed info
+        $list = ToDoList::findOne($id);
+        $itemsModel = new ToDoItem();
+        $itemsList = $itemsModel->getAllByListId($list);
+        $items=[];
+        foreach($itemsList as $item){
+            $items[] = $item->name;
+        }
+
+        //populate model data
+        $model = new ToDoListForm();
+        $model->list_id = $id;
+        $model->name = $list->name;
+        $model->user_id = $list->user_id;
+        $model->items = $items;
+        $user_id = Yii::$app->user->getId();
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->editToDoList()) {
+            Yii::$app->session->setFlash('success', 'You edited a list!');
+            return $this->redirect( Url::to(['to-do-list/index']));
         }
 
         return $this->render('update', [
             'model' => $model,
+            'user_id' => $user_id,
+            'list_id' => $id
         ]);
     }
 

@@ -45,14 +45,15 @@ class ToDoListForm extends Model
         $toDoList->user_id = $this->user_id;
         $toDoList->save();
 
+        if ($this->items) {
+            foreach ($this->items as $item) {
+                $toDoListItem = new ToDoItem();
+                $toDoListItem->list_id = $toDoList->getId();
+                $toDoListItem->name = $item;
+                $toDoListItem->status = 0;
 
-        foreach($this->items as $item){
-            $toDoListItem = new ToDoItem();
-            $toDoListItem->list_id = $toDoList->getId();
-            $toDoListItem->name = $item;
-            $toDoListItem->status = 0;
-
-            $toDoListItem->save();
+                $toDoListItem->save();
+            }
         }
 
         return true;
@@ -75,17 +76,21 @@ class ToDoListForm extends Model
 
         $itemsModel = new ToDoItem();
         $itemsList = $itemsModel->getAllByListId($toDoList);
-        foreach($itemsList as $item){
-            $item->delete();
+        if ($itemsList){
+            foreach($itemsList as $item){
+                $item->delete();
+            }
         }
 
-        foreach($this->items as $item){
-            $toDoListItem = new ToDoItem();
-            $toDoListItem->list_id = $toDoList->getId();
-            $toDoListItem->name = $item;
-            $toDoListItem->status = 0;
+        if ($this->items){
+            foreach($this->items as $item){
+                $toDoListItem = new ToDoItem();
+                $toDoListItem->list_id = $toDoList->getId();
+                $toDoListItem->name = $item;
+                $toDoListItem->status = 0;
 
-            $toDoListItem->save();
+                $toDoListItem->save();
+            }
         }
 
         return true;
