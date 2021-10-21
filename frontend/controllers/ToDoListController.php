@@ -149,8 +149,6 @@ class ToDoListController extends Controller
             return $this->redirect( Url::to(['to-do-list/update', 'id' => $list->id]));
         }
 
-
-
         return $this->render('update', [
             'model' => $model,
             'user_id' => $user_id,

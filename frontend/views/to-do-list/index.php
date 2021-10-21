@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\todomodels\ToDoListSearch */
@@ -25,13 +26,56 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+
             'name',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['style' => 'width:20%;'],
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($url) {
+                        return Html::a(
+                            "Show",
+                            $url,
+                            [
+                                'title' => 'Show',
+                                'data-pjax' => '0',
+                                'class' => 'btn btn-success'
+                            ]
+                        );
+                    },
+                    'update' => function ($url) {
+                        return Html::a(
+                            "Edit",
+                            $url,
+                            [
+                                'title' => 'Edit',
+                                'data-pjax' => '0',
+                                'class' => 'btn btn-warning'
+                            ]
+                        );
+                    },
+                    'delete' => function ($url) {
+                        return   Html::beginForm([$url], 'post', ['class' =>'d-inline'])
+                                .Html::submitButton('Delete', ['class' => 'btn btn-danger'])
+                                .Html::endForm()
+                       ;
+                    },
+                ],
+            ],
+
         ],
         'showFooter'=> false,
         'showHeader' => false,
-        'tableOptions' => ['class' => 'table tblSec']
+        'pager' => [
+                'class'=> \yii\bootstrap4\LinkPager::class ,
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageLabel' => '<',
+                'nextPageLabel' => '>',
+                'maxButtonCount' => 2,
+        ],
+        'tableOptions' => ['class' => 'table ']
     ]); ?>
 
 
